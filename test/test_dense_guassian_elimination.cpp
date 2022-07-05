@@ -11,5 +11,6 @@ int main()
                        4, 5, 6, 7, 5};
 
     dense_guassian_elimination(m, matA); 
+    print_dense(m, m, matA);
     return 0;
 }

@@ -1,6 +1,6 @@
 // Author: Angelo Gonzales
 // Date: June 2022
-#include "dense_guassian_elimination.hpp"
+#include "dense_LU.hpp"
 #include "string.h"
 
 #ifndef NDEBUG
@@ -8,14 +8,14 @@
 #endif
 
 template<typename I, typename J>
-int dense_guassian_elimination_template(I m, J* matA)
+int dense_LU_template(I m, J* matrix)
 {
     if(m < 0)
     {
         return 1;
     }
 
-    if(matA == nullptr)
+    if(matrix == nullptr)
     {
         return 2;
     }
@@ -32,24 +32,23 @@ int dense_guassian_elimination_template(I m, J* matA)
         for(I k = 0; k < i; k++)
         {
             // get the coefficient to perform row(i) = row(i) - pivot * row(k)
-            J pivot = matA[m * i + k] / matA[m * k + k];
+            J pivot = matrix[m * i + k] / matrix[m * k + k];
+
+            // put pivot in lower matrix
+            matrix[m * i + k] = pivot;
 
             // subtract row(k) from row(i)
-            for(I j = 0; j < m; j++)
+            for(I j = k+1; j < m; j++)
             {
-                matA[m * i + j] = matA[m * i + j] - pivot * matA[m * k + j];
+                matrix[m * i + j] = matrix[m * i + j] - pivot * matrix[m * k + j];
             }
-// #ifndef NDEBUG
-//             print_dense(m, m, matA);
-//             std::cout << std::endl;
-// #endif
         }
     }
 
     return 0;
 }
 
-extern int dense_guassian_elimination(int m, float* matrixA)
+extern int dense_LU(int m, float* matrixA)
 {                                                                                             
-    return dense_guassian_elimination_template(m, matrixA);
+    return dense_LU_template(m, matrixA);
 }

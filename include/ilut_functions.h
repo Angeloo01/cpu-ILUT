@@ -6,4 +6,8 @@
 
 int dense_guassian_elimination(int m, float* matrixA);
 
+int dense_LU(int m, float* matrix);
+
+int csr_ILU0(int m, int nnz, float* csr_val, int* csr_ptr, int* csr_col_ind);
+
 #endif
