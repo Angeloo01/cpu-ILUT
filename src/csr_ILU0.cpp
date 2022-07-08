@@ -1,6 +1,6 @@
 // Author: Angelo Gonzales
 // Date: June 2022
-#include "dense_LU.hpp"
+#include "csr_ILU0.hpp"
 #include "string.h"
 
 #ifndef NDEBUG
@@ -8,7 +8,7 @@
 #endif
 
 template<typename I, typename J>
-I find_index(I* arr, J low, J high, I key)
+I find_index(const I* arr, J low, J high, I key)
 {   
     while(low < high)
     {
@@ -35,7 +35,7 @@ I find_index(I* arr, J low, J high, I key)
 }
 
 template<typename I, typename J, typename K>
-int csr_ILU0_template(I m, K nnz, J* csr_val, K* csr_ptr, I* csr_col_ind)
+int csr_ILU0_template(I m, K nnz, J* __restrict__ csr_val, const K* __restrict__ csr_ptr, const I* __restrict__ csr_col_ind)
 {
     if(m < 0 || nnz < 0)
     {
@@ -114,7 +114,11 @@ int csr_ILU0_template(I m, K nnz, J* csr_val, K* csr_ptr, I* csr_col_ind)
     return 0;
 }
 
-extern int csr_ILU0(int m, int nnz, float* csr_val, int* csr_ptr, int* csr_col_ind)
+extern int csr_ILU0(int m, 
+                    int nnz, 
+                    float* __restrict__ csr_val, 
+                    const int* __restrict__ csr_ptr, 
+                    const int* __restrict__ csr_col_ind)
 {                                                                                             
     return csr_ILU0_template(m, nnz, csr_val, csr_ptr, csr_col_ind);
 }
