@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include "string.h"
 
 #define printNV(var) std::cout << #var": " << var << std::endl;
 
@@ -44,6 +45,45 @@ void print_csr_matrix(K nnz, I m, I n, const J* AA, const I* JA, const K* IA)
         }
         std::cout << std::endl;
     }
+}
+
+template<typename I, typename J, typename K>
+void print_unsorted_csr_matrix(K nnz, I m, I n, const J* AA, const I* JA, const K* IA)
+{
+    J *temp_row = new J[n];
+
+    //IA is size m+1
+    for(I i = 0; i < m; i++){
+        memset(temp_row, 0, sizeof(J) * n);
+        for(K c = IA[i]; c < IA[i+1] && c < nnz; c++){
+            temp_row[JA[c]] = AA[c];
+        }
+        for(I j = 0; j < n; j++)
+        {
+            std::cout << temp_row[j] << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    delete[] temp_row;
+}
+
+template<typename I, typename J>
+void print_array(I n, J* arr)
+{
+    std::cout << '[';
+    for(I i = 0; i < n-1; i++)
+    {
+        std::cout << arr[i] << ", ";
+    }
+    std::cout << arr[n-1] << ']' << std::endl;
+}
+
+template<typename I, typename J>
+void print_array(const char* name, I n, J* arr)
+{
+    std::cout << name << ": ";
+    print_array(n, arr);
 }
 
 #endif
