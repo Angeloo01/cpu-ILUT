@@ -23,6 +23,7 @@ int csr_ILU0(int m,
 *   - csr_ptr_B is of size m+1
 *   - cst_col_ind_B is of size (1 + 2p)m - p(p + 1);
 *  
+*  if zero pivot, behaviour is undefined
 */ 
 int csr_ILUT(int m, 
              int nnz, 
