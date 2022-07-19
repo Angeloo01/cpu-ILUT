@@ -126,7 +126,7 @@ int csr_ILUT_template(I m,
                       K*         __restrict__ csr_ptr_B, 
                       I*         __restrict__ csr_col_ind_B)
 {
-    if(m < 0 || nnz < 0 || p <= 0)
+    if(m < 0 || nnz < 0 || p <= 0 || tau <= 0)
     {
         return 1;
     }
@@ -161,8 +161,10 @@ int csr_ILUT_template(I m,
         //calculate relative tolerance
         r_tol = tau * row_norm(&csr_val_A[csr_ptr_A[i]], &csr_val_A[csr_ptr_A[i+1]]);
 
+        // replace
         // copy row to working buffer
         memset(temp_buffer, 0, sizeof(J) * m);
+
         for(K c = csr_ptr_A[i]; c < csr_ptr_A[i+1]; c++)
         {
             temp_buffer[csr_col_ind_A[c]] = csr_val_A[c];
@@ -179,19 +181,12 @@ int csr_ILUT_template(I m,
             //find the index of element k, k in the upper matrix
             //K pivot_index = find_index(csr_col_ind_B, csr_ptr_B[k], csr_ptr_B[k+1], k);
             K pivot_index = temp_pivot_buffer[k];
-            if(pivot_index < 0)
-            {
-                delete[] temp_buffer;
-                delete[] temp_perm_buffer;
-                delete[] temp_pivot_buffer;
-                return 3; // if zero pivot, then matrix is invalid
-            }
 
             // get the coefficient to perform row(i) = row(i) - pivot * row(k)
             // pivot = elm(i, k) / elm(k, k)
             J pivot = temp_buffer[k] / csr_val_B[pivot_index];
 
-            if(pivot >= r_tol)
+            if(abs_j(pivot) >= r_tol)
             {
                 // put pivot in lower matrix; put in elm(i, k)
                 temp_buffer[k] = pivot;

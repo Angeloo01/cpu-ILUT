@@ -24,15 +24,15 @@ void test_dense_csr()
 void test_sparse_csr()
 {
     static constexpr int m = 5;
-    static constexpr int nnz = 12;
+    static constexpr int nnz = 13;
     float csr_val[nnz] = {1, 1,       1,
-                             2, 1,     
+                          1, 2, 1,     
                                 3,  
                           3,       4, 1,
                           4,    6,    5};
-    int csr_ptr[m+1] = {0, 3, 5, 6, 9, 12};
+    int csr_ptr[m+1] = {0, 3, 6, 7, 10, 13};
     int csr_col_ind[nnz] = {0, 1,       4,
-                               1, 2,  
+                            0,  1, 2,  
                                   2,  
                             0,       3, 4,
                             0,     2,    4};
