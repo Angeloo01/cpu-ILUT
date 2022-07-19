@@ -1,5 +1,5 @@
-#include "ilut_functions.h"
-#include "debug.hpp"
+#include "../include/ilut_functions.h"
+#include "../src/debug.hpp"
 
 int main()
 {
