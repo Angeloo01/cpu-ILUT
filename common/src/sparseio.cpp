@@ -1,7 +1,7 @@
 // Author: Angelo Gonzales
 // Date: July 2022
 
-#include "../sparseio.hpp"
+#include "sparseio.hpp"
 #include <regex>
 #include <iostream>
 #include <stdarg.h>
