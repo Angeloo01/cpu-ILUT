@@ -1,8 +1,9 @@
 #include "debug.hpp"
 #include "sparseio.hpp"
+#include "mm_import.h"
 #include <fstream>
 
-int main()
+void customRead()
 {
     std::ifstream a("/home/cgy-decidueye/Repos/cpu-ILUT/test/tests/csr_ex.txt");
     
@@ -37,7 +38,22 @@ int main()
 
         a.close();
     }
-    
+}
 
+void mm_import()
+{
+    const char* filename = "/home/cgy-decidueye/Repos/cpu-ILUT/test/tests/impcol_b.mtx";
+    int m, n, nnz, *row, *col;
+    double *val;
+
+    printNV(mm_coo_import_real(filename, nnz, m, n, 1, val, row, col));
+    printNV(nnz);
+    printNV(m);
+    printNV(n);
+}
+
+int main()
+{
+    mm_import();
     return 0;
 }

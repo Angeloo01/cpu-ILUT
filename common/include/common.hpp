@@ -1,5 +1,7 @@
 // Author: Angelo Gonzales
 // Date: July 2022
+
+#pragma once
 #include "debug.hpp"
 
 template<typename I, typename J>
