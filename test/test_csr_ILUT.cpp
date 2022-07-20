@@ -65,9 +65,12 @@ void test_sparse_csr()
 void test_loaded_csr()
 {
     std::ifstream a("/home/cgy-decidueye/Repos/cpu-ILUT/test/tests/csr_ex.txt");
+
+    std::cout << "reading file..." << std::endl;
     
     if(a.is_open())
     {
+        std::cout << "opened file..." << std::endl;
         int m, nnzA, nnzR, p, *ptrA, *colA, *ptrB, *colB, *ptrC, *colC;
         float tau, *valA, *valB, *valC;
 
